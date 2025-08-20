@@ -189,14 +189,12 @@ function renderSummary() {
   sumBalance.textContent = formatCurrency(balance);
 }
 
-function renderTable() {
-  const query = searchInput.value.trim().toLowerCase();
-  const month = monthPicker.value; // yyyy-mm
+const filterDate = monthPicker.value; // yyyy-mm-dd
 
-  const filtered = transactions
-    .filter(t => !month || t.dateISO.slice(0,7) === month)
-    .filter(t => !query || `${t.category} ${t.desc}`.toLowerCase().includes(query))
-    .sort((a,b) => b.dateISO.localeCompare(a.dateISO));
+const filtered = transactions
+  .filter(t => !filterDate || t.dateISO === filterDate)
+  .filter(t => !query || `${t.category} ${t.desc}`.toLowerCase().includes(query))
+  .sort((a,b) => b.dateISO.localeCompare(a.dateISO));
 
   txTableBody.innerHTML = "";
   if (filtered.length === 0) {
